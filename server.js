@@ -1,13 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); // Use express.json() instead of body-parser
 
 // GET Method
 app.get("/bfhl", (req, res) => {
@@ -18,6 +16,7 @@ app.get("/bfhl", (req, res) => {
 app.post("/bfhl", (req, res) => {
     try {
         const { data } = req.body;
+
         if (!data || !Array.isArray(data)) {
             return res.status(400).json({ is_success: false, message: "Invalid input format" });
         }
@@ -28,7 +27,7 @@ app.post("/bfhl", (req, res) => {
 
         res.json({
             is_success: true,
-            user_id: "22bcs17240_cuchd",  // Change if needed
+            user_id: "22bcs17240_cuchd",
             email: "22bcs17240@cuchd.in",
             roll_number: "22BCS17240",
             numbers,
@@ -40,8 +39,7 @@ app.post("/bfhl", (req, res) => {
     }
 });
 
-// Start the server
+// Start server
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
 });
-
